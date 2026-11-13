@@ -50,19 +50,23 @@ public:
         }
         seat_capacity = capacity;
     }
+
+    void get_info() const {
+        std::cout << "Il s'agit d'un bus d'une capacité de "
+                  << getseating_capacity()
+                  << " places, avec une vitesse maximale de "
+                  << getmax_speed()
+                  << " km/h et son kilométrage est de "
+                  << getmileage() << " km.\n";
+    }
 };
 
 int main() {
     Bus bus;
 
-    std::cout << "Capacite initiale : "
-              << bus.getseating_capacity() << " places\n";
-
-    for (int capacity : {10, 40, 50, 9, 51}) {
-        bus.setseating_capacity(capacity);
-        std::cout << "Demande de " << capacity << " places -> "
-                  << bus.getseating_capacity() << " places\n";
-    }
+    bus.setseating_capacity(40);
+    bus.setmileage(200000);
+    bus.get_info();
 
     return 0;
 }
