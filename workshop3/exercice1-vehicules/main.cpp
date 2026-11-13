@@ -1,4 +1,3 @@
-#include <cassert>
 #include <iostream>
 
 class Vehicule {
@@ -39,20 +38,31 @@ private:
 
 public:
     Bus() : seat_capacity{10} {
-        assert(seat_capacity == 10);
+    }
+
+    int getseating_capacity() const {
+        return seat_capacity;
+    }
+
+    void setseating_capacity(int capacity) {
+        if (capacity < 10 || capacity > 50) {
+            capacity = 50;
+        }
+        seat_capacity = capacity;
     }
 };
 
 int main() {
     Bus bus;
 
-    std::cout << "Bus au depart : "
-              << bus.getmax_speed() << " km/h, "
-              << bus.getmileage() << " km\n";
+    std::cout << "Capacite initiale : "
+              << bus.getseating_capacity() << " places\n";
 
-    bus.setmileage(1500);
-    std::cout << "Bus apres modification : "
-              << bus.getmileage() << " km\n";
+    for (int capacity : {10, 40, 50, 9, 51}) {
+        bus.setseating_capacity(capacity);
+        std::cout << "Demande de " << capacity << " places -> "
+                  << bus.getseating_capacity() << " places\n";
+    }
 
     return 0;
 }
