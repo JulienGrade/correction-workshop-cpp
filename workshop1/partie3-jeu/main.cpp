@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <cstdlib>
 #include <iostream>
 #include <string>
@@ -6,18 +7,21 @@ class Heros {
 private:
     std::string nom{"Heros"};
     int pv{10};
+    int pvMax{10};
     int pa{10};
     bool epeeEquipee{false};
+    bool potionDisponible{true};
 
 public:
     Heros() = default;
 
     Heros(std::string nom, int pv, int pa)
-        : nom{nom}, pv{pv}, pa{pa} {
+        : nom{nom}, pv{pv}, pvMax{pv}, pa{pa} {
     }
 
     void affiche() const {
-        std::cout << nom << " - " << pv << " PV, " << pa << " PA";
+        std::cout << nom << " - " << pv << "/" << pvMax << " PV, "
+                  << pa << " PA";
         if (epeeEquipee) {
             std::cout << " - Epee (+3 degats)";
         }
@@ -26,6 +30,24 @@ public:
 
     void equiperEpee() {
         epeeEquipee = true;
+    }
+
+    void boirePotion() {
+        if (!potionDisponible) {
+            std::cout << "Tu n'as plus de potion.\n";
+            return;
+        }
+
+        if (pv == pvMax) {
+            std::cout << "Tes PV sont deja au maximum. Tu gardes la potion.\n";
+            return;
+        }
+
+        const int soin = std::min(5, pvMax - pv);
+        pv += soin;
+        potionDisponible = false;
+
+        std::cout << nom << " recupere " << soin << " PV.\n";
     }
 
     int attaque() const {
@@ -83,7 +105,11 @@ int main() {
     creature.affiche();
 
     while (heros.estVivant() && creature.estVivant()) {
-        std::cout << "\n1. Attaquer\n2. Quitter\n3. Equiper l'epee\nTon choix : ";
+        std::cout << "\n1. Attaquer\n"
+                  << "2. Quitter\n"
+                  << "3. Equiper l'epee\n"
+                  << "4. Boire la potion\n"
+                  << "Ton choix : ";
 
         std::string choix;
         if (!std::getline(std::cin, choix) || choix == "2") {
@@ -97,8 +123,14 @@ int main() {
             continue;
         }
 
+        if (choix == "4") {
+            heros.boirePotion();
+            heros.affiche();
+            continue;
+        }
+
         if (choix != "1") {
-            std::cout << "Choix invalide. Saisis 1, 2 ou 3.\n";
+            std::cout << "Choix invalide. Saisis 1, 2, 3 ou 4.\n";
             continue;
         }
 
