@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 
 class Vehicule {
@@ -32,24 +33,26 @@ public:
     }
 };
 
+class Bus : public Vehicule {
+private:
+    int seat_capacity;
+
+public:
+    Bus() : seat_capacity{10} {
+        assert(seat_capacity == 10);
+    }
+};
+
 int main() {
-    Vehicule vehicule;
+    Bus bus;
 
-    std::cout << "Valeurs initiales : "
-              << vehicule.getmax_speed() << " km/h, "
-              << vehicule.getmileage() << " km\n";
+    std::cout << "Bus au depart : "
+              << bus.getmax_speed() << " km/h, "
+              << bus.getmileage() << " km\n";
 
-    vehicule.setmax_speed(200);
-    vehicule.setmileage(1500);
-    std::cout << "Apres des valeurs valides : "
-              << vehicule.getmax_speed() << " km/h, "
-              << vehicule.getmileage() << " km\n";
-
-    vehicule.setmax_speed(199);
-    vehicule.setmileage(-10);
-    std::cout << "Apres des valeurs hors limites : "
-              << vehicule.getmax_speed() << " km/h, "
-              << vehicule.getmileage() << " km\n";
+    bus.setmileage(1500);
+    std::cout << "Bus apres modification : "
+              << bus.getmileage() << " km\n";
 
     return 0;
 }
