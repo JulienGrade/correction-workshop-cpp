@@ -1,5 +1,4 @@
 #include <iostream>
-#include <type_traits>
 
 class Objet {
 public:
@@ -67,11 +66,16 @@ public:
 };
 
 int main() {
-    static_assert(std::is_abstract_v<Objet>);
-    static_assert(!std::is_abstract_v<Rectangle>);
-    static_assert(!std::is_abstract_v<Carre>);
+    Rectangle rectangle{3, 5};
+    Carre carre{4};
 
-    std::cout << "La hierarchie des formes est valide.\n";
+    rectangle.afficheInfo();
+    std::cout << "Aire : " << rectangle.aire() << '\n';
+    std::cout << "Perimetre : " << rectangle.perimetre() << "\n\n";
+
+    carre.afficheInfo();
+    std::cout << "Aire : " << carre.aire() << '\n';
+    std::cout << "Perimetre : " << carre.perimetre() << '\n';
 
     return 0;
 }
