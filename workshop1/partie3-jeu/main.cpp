@@ -7,6 +7,7 @@ private:
     std::string nom{"Heros"};
     int pv{10};
     int pa{10};
+    bool epeeEquipee{false};
 
 public:
     Heros() = default;
@@ -16,11 +17,20 @@ public:
     }
 
     void affiche() const {
-        std::cout << nom << " - " << pv << " PV, " << pa << " PA\n";
+        std::cout << nom << " - " << pv << " PV, " << pa << " PA";
+        if (epeeEquipee) {
+            std::cout << " - Epee (+3 degats)";
+        }
+        std::cout << '\n';
+    }
+
+    void equiperEpee() {
+        epeeEquipee = true;
     }
 
     int attaque() const {
-        return 1 + std::rand() % pa;
+        const int degats = 1 + std::rand() % pa;
+        return degats + (epeeEquipee ? 3 : 0);
     }
 
     void subitDegat(int degat) {
@@ -73,7 +83,7 @@ int main() {
     creature.affiche();
 
     while (heros.estVivant() && creature.estVivant()) {
-        std::cout << "\n1. Attaquer\n2. Quitter\nTon choix : ";
+        std::cout << "\n1. Attaquer\n2. Quitter\n3. Equiper l'epee\nTon choix : ";
 
         std::string choix;
         if (!std::getline(std::cin, choix) || choix == "2") {
@@ -81,8 +91,14 @@ int main() {
             return 0;
         }
 
+        if (choix == "3") {
+            heros.equiperEpee();
+            heros.affiche();
+            continue;
+        }
+
         if (choix != "1") {
-            std::cout << "Choix invalide. Saisis 1 ou 2.\n";
+            std::cout << "Choix invalide. Saisis 1, 2 ou 3.\n";
             continue;
         }
 
