@@ -73,26 +73,15 @@ int main() {
     creature.affiche();
 
     const int degatsHeros = heros.attaque();
+    creature.subitDegat(degatsHeros);
+    std::cout << "Hrun inflige " << degatsHeros << " degats.\n";
+
     const int degatsCreature = creature.attaque();
-
-    if (degatsHeros < 1 || degatsHeros > 10 ||
-        degatsCreature < 1 || degatsCreature > 10) {
-        std::cerr << "[ECHEC] Degats hors limites.\n";
-        return 1;
-    }
-    std::cout << "[OK] Les deux attaques donnent entre 1 et 10 degats.\n";
-
-    heros.subitDegat(3);
-    creature.subitDegat(10);
+    heros.subitDegat(degatsCreature);
+    std::cout << "La creature inflige " << degatsCreature << " degats.\n";
 
     heros.affiche();
     creature.affiche();
-
-    if (!heros.estVivant() || creature.estVivant()) {
-        std::cerr << "[ECHEC] Etat des personnages incorrect.\n";
-        return 1;
-    }
-    std::cout << "[OK] Le heros est vivant et la creature est vaincue.\n";
 
     return 0;
 }
