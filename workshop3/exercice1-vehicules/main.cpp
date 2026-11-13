@@ -1,4 +1,6 @@
 #include <iostream>
+#include <iterator>
+#include <string>
 
 class Vehicule {
 private:
@@ -61,12 +63,63 @@ public:
     }
 };
 
-int main() {
-    Bus bus;
+class SchoolBus : public Bus {
+private:
+    std::string school_name;
 
-    bus.setseating_capacity(40);
-    bus.setmileage(200000);
-    bus.get_info();
+public:
+    SchoolBus(std::string sn) : school_name{sn} {
+    }
+
+    std::string getSchoolName() const {
+        return school_name;
+    }
+
+    void setSchoolName(std::string sn) {
+        school_name = sn;
+    }
+};
+
+static int countbigbus(const SchoolBus t[], std::size_t taille) {
+    int nombre = 0;
+
+    for (std::size_t i = 0; i < taille; ++i) {
+        if (t[i].getseating_capacity() >= 40 && t[i].getmileage() < 200000) {
+            ++nombre;
+        }
+    }
+
+    return nombre;
+}
+
+int main() {
+    SchoolBus busScolaires[] = {
+        SchoolBus{"École A"},
+        SchoolBus{"École B"},
+        SchoolBus{"École C"},
+        SchoolBus{"École D"}
+    };
+
+    busScolaires[0].setseating_capacity(40);
+    busScolaires[0].setmileage(199999);
+
+    busScolaires[1].setseating_capacity(50);
+    busScolaires[1].setmileage(200000);
+
+    busScolaires[2].setseating_capacity(39);
+    busScolaires[2].setmileage(150000);
+
+    busScolaires[3].setseating_capacity(45);
+    busScolaires[3].setmileage(120000);
+
+    for (const SchoolBus& bus : busScolaires) {
+        std::cout << bus.getSchoolName() << " - "
+                  << bus.getseating_capacity() << " places, "
+                  << bus.getmileage() << " km\n";
+    }
+
+    std::cout << "Nombre de grands bus scolaires : "
+              << countbigbus(busScolaires, std::size(busScolaires)) << '\n';
 
     return 0;
 }
