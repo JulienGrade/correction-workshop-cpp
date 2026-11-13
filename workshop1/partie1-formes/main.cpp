@@ -1,11 +1,16 @@
 #include <iostream>
 #include <cmath>
 
-typedef struct Circle {
+class Circle {
+public:
     double x;
     double y;
     double r;
-} Circle;
+
+    Circle(double x, double y, double r)
+        : x{x}, y{y}, r{r} {
+    }
+};
 
 void set_pos(Circle* c, double x, double y) {
     c->x = x;
@@ -18,12 +23,17 @@ double perimeter(Circle c) {
 
 // TODO: Add a method to calculate the area of the circle
 
-typedef struct Rectangle {
+class Rectangle {
+public:
     double x;
     double y;
     double w;
     double h;
-} Rectangle;
+
+    Rectangle(double x, double y, double w, double h)
+        : x{x}, y{y}, w{w}, h{h} {
+    }
+};
 
 // TODO: Add a method to calculate the area of the rectangle
 
