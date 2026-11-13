@@ -17,3 +17,4 @@ public:
     double perimetre() const override;
     void afficheInfo() const override;
 };
+
