@@ -7,11 +7,11 @@ private:
 public:
     BankAccount(double balance) : balance(balance) {}
 
-    double getBalance() {
+    double getBalance() const {
         return balance;
     }
 
-    bool deposit(double amount) {
+    bool deposit(const double amount) {
         if (amount <= 0) {
             return false;
         }
@@ -20,7 +20,7 @@ public:
         return true;
     }
 
-    bool withdraw(double amount) {
+    bool withdraw(const double amount) {
         if (amount <= 0 || amount > balance) {
             return false;
         }
@@ -49,6 +49,10 @@ public:
     }
 };
 
+void afficherSolde(const char* libelle, const BankAccount& compte) {
+    std::cout << libelle << compte.getBalance() << '\n';
+}
+
 void testTransaction(double amount) {
     BankAccount account1{1000.0};
     BankAccount account2{500.0};
@@ -62,8 +66,9 @@ void testTransaction(double amount) {
         std::cout << "Transaction failed\n";
     }
 
-    std::cout << "Solde emetteur : " << account1.getBalance() << '\n';
-    std::cout << "Solde destinataire : " << account2.getBalance() << "\n\n";
+    afficherSolde("Solde emetteur : ", account1);
+    afficherSolde("Solde destinataire : ", account2);
+    std::cout << '\n';
 }
 
 int main() {
