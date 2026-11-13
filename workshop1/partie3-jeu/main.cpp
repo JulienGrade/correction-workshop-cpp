@@ -72,16 +72,39 @@ int main() {
     heros.affiche();
     creature.affiche();
 
-    const int degatsHeros = heros.attaque();
-    creature.subitDegat(degatsHeros);
-    std::cout << "Hrun inflige " << degatsHeros << " degats.\n";
+    while (heros.estVivant() && creature.estVivant()) {
+        std::cout << "\n1. Attaquer\n2. Quitter\nTon choix : ";
 
-    const int degatsCreature = creature.attaque();
-    heros.subitDegat(degatsCreature);
-    std::cout << "La creature inflige " << degatsCreature << " degats.\n";
+        std::string choix;
+        if (!std::getline(std::cin, choix) || choix == "2") {
+            std::cout << "Partie terminee.\n";
+            return 0;
+        }
 
-    heros.affiche();
-    creature.affiche();
+        if (choix != "1") {
+            std::cout << "Choix invalide. Saisis 1 ou 2.\n";
+            continue;
+        }
+
+        const int degatsHeros = heros.attaque();
+        creature.subitDegat(degatsHeros);
+        std::cout << "Hrun inflige " << degatsHeros << " degats.\n";
+
+        if (creature.estVivant()) {
+            const int degatsCreature = creature.attaque();
+            heros.subitDegat(degatsCreature);
+            std::cout << "La creature inflige " << degatsCreature << " degats.\n";
+        }
+
+        heros.affiche();
+        creature.affiche();
+    }
+
+    if (heros.estVivant()) {
+        std::cout << "Victoire de Hrun !\n";
+    } else {
+        std::cout << "Hrun est vaincu.\n";
+    }
 
     return 0;
 }
