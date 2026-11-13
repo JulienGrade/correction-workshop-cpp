@@ -85,34 +85,42 @@ public:
     void setRoom(std::size_t index, std::unique_ptr<Room> room) {
         rooms.at(index) = std::move(room);
     }
+
+    void getNbOfBathroom() const {
+        int count = 0;
+
+        for (const auto& room : rooms) {
+            if (dynamic_cast<const Bathroom*>(room.get()) != nullptr) {
+                ++count;
+            }
+        }
+
+        std::cout << "Nombre de salles de bains : " << count << '\n';
+    }
+
+    void getNbOfBedroom() const {
+        int count = 0;
+
+        for (const auto& room : rooms) {
+            if (dynamic_cast<const Bedroom*>(room.get()) != nullptr) {
+                ++count;
+            }
+        }
+
+        std::cout << "Nombre de chambres : " << count << '\n';
+    }
 };
 
 int main() {
-    House maison{3};
+    House maison{5};
 
-    auto salon = std::make_unique<Room>(2, "blanc");
-    salon->setNbWindows(3);
-    salon->setColor("gris");
+    maison.setRoom(0, std::make_unique<Room>(3, "gris"));
+    maison.setRoom(1, std::make_unique<Bathroom>(1, "bleu", true));
+    maison.setRoom(2, std::make_unique<Bedroom>(2, "vert", 2));
+    maison.setRoom(3, std::make_unique<Bedroom>(1, "blanc", 1));
 
-    auto salleDeBains = std::make_unique<Bathroom>(1, "bleu", false);
-    salleDeBains->setHasShower(true);
-    std::cout << "Salle de bains avec douche : "
-              << (salleDeBains->getHasShower() ? "oui" : "non") << '\n';
-
-    auto chambre = std::make_unique<Bedroom>(2, "vert", 1);
-    chambre->setNbBeds(2);
-    std::cout << "Nombre de lits dans la chambre : "
-              << chambre->getNbBeds() << '\n';
-
-    maison.setRoom(0, std::move(salon));
-    maison.setRoom(1, std::move(salleDeBains));
-    maison.setRoom(2, std::move(chambre));
-
-    const Room* premierePiece = maison.getRoom(0);
-    if (premierePiece != nullptr) {
-        std::cout << "Premiere piece : " << premierePiece->getColor()
-                  << ", " << premierePiece->getNbWindows() << " fenetres\n";
-    }
+    maison.getNbOfBathroom();
+    maison.getNbOfBedroom();
 
     return 0;
 }
