@@ -20,7 +20,9 @@ public:
         return 2 * M_PI * r;
     }
 
-    // TODO: Add a method to calculate the area of the circle
+    double area() const {
+        return M_PI * r * r;
+    }
 };
 
 class Rectangle {
@@ -43,18 +45,22 @@ public:
         return 2 * (w + h);
     }
 
-    // TODO: Add a method to calculate the area of the rectangle
+    double area() const {
+        return w * h;
+    }
 };
 
 int main() {
     Circle c{0, 0, 1};
     std::cout << c.perimeter() << std::endl;
+    std::cout << "Circle area: " << c.area() << std::endl;
     c.set_pos(1, 1);
     std::cout << "Coordinates of the center: ("
               << c.x << ", " << c.y << ")" << std::endl;
 
     Rectangle r{0, 0, 1, 2};
     std::cout << r.perimeter() << std::endl;
+    std::cout << "Rectangle area: " << r.area() << std::endl;
     r.set_pos(-1, -1);
     std::cout << "Coordinates of the top left corner: ("
               << r.x << ", " << r.y << ")" << std::endl;
