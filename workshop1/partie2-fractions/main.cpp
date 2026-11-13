@@ -1,3 +1,4 @@
+#include <cassert>
 #include <iostream>
 
 using namespace std;
@@ -59,7 +60,55 @@ public:
             denominateur * autre.numerateur
         };
     }
+
+    void simplify() {
+        if (denominateur == 0) {
+            return;
+        }
+
+        long long a = numerateur;
+        long long b = denominateur;
+
+        if (a < 0) {
+            a = -a;
+        }
+        if (b < 0) {
+            b = -b;
+        }
+
+        while (b != 0) {
+            const long long reste = a % b;
+            a = b;
+            b = reste;
+        }
+
+        numerateur = static_cast<int>(numerateur / a);
+        denominateur = static_cast<int>(denominateur / a);
+    }
 };
+
+#ifdef TEST_SIMPLIFY
+
+int main() {
+    const Fraction f1{1, 2};
+    const Fraction f2{3, 4};
+
+    Fraction somme = f1.add(f2);
+    assert(somme.getNumerateur() == 10 && somme.getDenominateur() == 8);
+    somme.simplify();
+    assert(somme.getNumerateur() == 5 && somme.getDenominateur() == 4);
+    cout << "[OK] 10/8 devient 5/4\n";
+
+    Fraction difference = f1.minus(f2);
+    assert(difference.getNumerateur() == -2 && difference.getDenominateur() == 8);
+    difference.simplify();
+    assert(difference.getNumerateur() == -1 && difference.getDenominateur() == 4);
+    cout << "[OK] -2/8 devient -1/4\n";
+
+    return 0;
+}
+
+#else
 
 int main()
 {
@@ -120,3 +169,5 @@ int main()
     }
     return 0;
 }
+
+#endif
