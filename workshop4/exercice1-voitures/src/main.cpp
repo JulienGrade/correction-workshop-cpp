@@ -1,31 +1,31 @@
 #include "Voiture.hpp"
+#include "VoitureSport.hpp"
 
 #include <iostream>
 
+void afficher(const Voiture& voiture) {
+    std::cout << voiture.getType()
+              << " : " << voiture.getVitesse() << " km/h"
+              << ", maximum " << voiture.getVitesseMax()
+              << ", acceleration " << voiture.getAcceleration()
+              << '\n';
+}
+
 int main() {
-    Voiture voiture;
+    Voiture voiture{150, 9};
+    VoitureSport sportive{250, 12};
 
-    std::cout << "Voiture par defaut : "
-              << voiture.getVitesse() << " km/h, maximum "
-              << voiture.getVitesseMax() << ", acceleration "
-              << voiture.getAcceleration() << '\n';
+    afficher(voiture);
+    afficher(sportive);
 
-    voiture.initialiser(8, 3);
+    voiture.accelerer();
+    sportive.accelerer();
 
-    for (int tour = 1; tour <= 4; ++tour) {
-        voiture.accelerer();
-        std::cout << "Acceleration " << tour << " : "
-                  << voiture.getVitesse() << " km/h\n";
-    }
+    std::cout << "\nApres une acceleration :\n";
+    afficher(voiture);
+    afficher(sportive);
 
-    Voiture voitureLimitee{150, 9};
-
-    std::cout << "Parametres limites : maximum "
-              << voitureLimitee.getVitesseMax()
-              << ", acceleration "
-              << voitureLimitee.getAcceleration() << '\n';
-
-    std::cout << "Nombre d'objets crees : "
+    std::cout << "\nNombre d'objets crees : "
               << Voiture::getNombreObjetsCrees() << '\n';
 
     return 0;
