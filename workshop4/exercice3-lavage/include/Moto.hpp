@@ -2,7 +2,9 @@
 
 #include "Vehicule.hpp"
 
-class Moto : public Vehicule{
-    public:
-        void laver() const override;
+// Une Moto est également un Vehicule.
+class Moto : public Vehicule {
+public:
+    // Fournit le comportement de lavage des motos.
+    void laver() const override;
 };
