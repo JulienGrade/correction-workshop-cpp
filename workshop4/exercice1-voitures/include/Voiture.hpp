@@ -27,7 +27,7 @@ public:
     virtual ~Voiture() = default;
 
     void initialiser(int vitesseMax, int acceleration);
-    void accelerer();
+    virtual void accelerer();
 
     int getVitesseMax() const;
     int getVitesse() const;

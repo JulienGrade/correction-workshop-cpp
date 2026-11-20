@@ -1,6 +1,7 @@
 #include "Voiture.hpp"
 
 #include <algorithm>
+#include <iostream>
 
 Voiture::Voiture() : Voiture{100, 3} {
 }
@@ -37,7 +38,16 @@ void Voiture::initialiser(int vitesseMax, int acceleration) {
 }
 
 void Voiture::accelerer() {
-    vitesse = std::min(vitesse + acceleration, vitesseMax);
+    if (acceleration == 0) {
+        std::cout << "Acceleration nulle : la vitesse reste a "
+                  << vitesse << " km/h.\n";
+        return;
+    }
+
+    while (vitesse < vitesseMax) {
+        vitesse = std::min(vitesse + acceleration, vitesseMax);
+        std::cout << "Vitesse : " << vitesse << " km/h\n";
+    }
 }
 
 int Voiture::getVitesseMax() const {

@@ -13,30 +13,31 @@ void afficher(const Voiture& voiture) {
 }
 
 int main() {
-    std::unique_ptr<Voiture> voiture = std::make_unique<Voiture>();
-    VoitureSport sportive;
+    std::unique_ptr<Voiture> voiture =
+        std::make_unique<Voiture>(10, 3);
+
+    VoitureSport sportive{20, 8};
 
     std::cout << "Au depart :\n";
     afficher(*voiture);
     afficher(sportive);
 
+    std::cout << "\nAcceleration de la voiture classique :\n";
     voiture->accelerer();
+
+    std::cout << "\nAcceleration de la sportive :\n";
     sportive.accelerer();
 
-    std::cout << "\nApres une acceleration :\n";
-    afficher(*voiture);
-    afficher(sportive);
-
-    voiture = std::make_unique<VoitureSport>();
+    voiture = std::make_unique<VoitureSport>(20, 8);
 
     std::cout << "\nApres remplacement par une sportive :\n";
     afficher(*voiture);
 
+    std::cout << "\nAcceleration via le pointeur Voiture :\n";
     voiture->accelerer();
-    sportive.accelerer();
 
-    std::cout << "\nApres une nouvelle acceleration :\n";
-    afficher(*voiture);
+    std::cout << "\nNouvel appel sur la sportive deja au maximum :\n";
+    sportive.accelerer();
     afficher(sportive);
 
     std::cout << "\nNombre d'objets crees : "
