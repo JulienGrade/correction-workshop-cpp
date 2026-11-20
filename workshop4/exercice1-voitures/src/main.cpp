@@ -2,6 +2,7 @@
 #include "VoitureSport.hpp"
 
 #include <iostream>
+#include <memory>
 
 void afficher(const Voiture& voiture) {
     std::cout << voiture.getType()
@@ -12,17 +13,30 @@ void afficher(const Voiture& voiture) {
 }
 
 int main() {
-    Voiture voiture{150, 9};
-    VoitureSport sportive{250, 12};
+    std::unique_ptr<Voiture> voiture = std::make_unique<Voiture>();
+    VoitureSport sportive;
 
-    afficher(voiture);
+    std::cout << "Au depart :\n";
+    afficher(*voiture);
     afficher(sportive);
 
-    voiture.accelerer();
+    voiture->accelerer();
     sportive.accelerer();
 
     std::cout << "\nApres une acceleration :\n";
-    afficher(voiture);
+    afficher(*voiture);
+    afficher(sportive);
+
+    voiture = std::make_unique<VoitureSport>();
+
+    std::cout << "\nApres remplacement par une sportive :\n";
+    afficher(*voiture);
+
+    voiture->accelerer();
+    sportive.accelerer();
+
+    std::cout << "\nApres une nouvelle acceleration :\n";
+    afficher(*voiture);
     afficher(sportive);
 
     std::cout << "\nNombre d'objets crees : "
