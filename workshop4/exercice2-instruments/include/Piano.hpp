@@ -2,7 +2,9 @@
 
 #include "Instrument.hpp"
 
-class Piano : public Instrument{
-    public:
-        void jouer() const override;
+// Un Piano est aussi un Instrument.
+class Piano : public Instrument {
+public:
+    // Fournit le comportement spécifique du piano.
+    void jouer() const override;
 };
